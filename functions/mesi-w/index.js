@@ -12,7 +12,7 @@ const twitterClient = new Twitter({
 
 const getMentionTimeLine = async () => {
     return twitterClient.get('statuses/mentions_timeline', {
-        count: 20,
+        count: 10,
         include_entities: false,
     });
 }
