@@ -34,7 +34,7 @@ async function main(event) {
 
     for (let status of statuses.reverse()) {
         const result = await twitterClient.post('statuses/update', { status: status });
-        console.log(result.id_str);
+        console.log(`status_id: ${result.id_str}`);
     }
 }
 
@@ -42,5 +42,6 @@ async function main(event) {
 exports.handler = async (event) => {
     await main(event);
 }
+
 
 // main({ time: '2019-05-24T14:50:00Z' }).then();
