@@ -12,17 +12,17 @@ const twitterClient = new Twitter({
 
 const getMentionTimeLine = async () => {
     return twitterClient.get('statuses/mentions_timeline', {
-        count: 10,
+        count: 30,
         include_entities: false,
     });
 }
 
+
 async function main(event) {
     const lastRun = moment(event.time).add(-10, 'm').unix();
     const mentions = (await getMentionTimeLine())
-        .filter(e =>
-            moment(e.created_at, "ddd MMM D HH:mm:ss ZZ YYYY").unix() > lastRun
-            && e.in_reply_to_status_id_str === null)
+        .filter(e => moment(e.created_at, "ddd MMM D HH:mm:ss ZZ YYYY").unix() > lastRun)
+        .filter(e => e.in_reply_to_status_id_str === null || (e.text || '').trim() === `@${process.env.TWITTER_SCREEN_NAME}`)
         .map(e => {
             return {
                 screenName: e.user.screen_name,
