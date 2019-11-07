@@ -12,7 +12,13 @@ const twitterClient = new Twitter({
 });
 
 
-const generateTabelogRamenListURL = (pageNumber) => `https://tabelog.com/tokyo/A1305/A130503/R5779/rstLst/ramen/${pageNumber}/?LstRange=SB`
+const generateTabelogRamenListURL1 = (pageNumber) => `https://tabelog.com/tokyo/A1305/A130503/R5779/rstLst/ramen/${pageNumber}/?LstRange=SB`
+
+
+const generateTabelogRamenListURL2 = (pageNumber) => `https://tabelog.com/tokyo/A1305/A130504/R10705/rstLst/ramen/${pageNumber}/?LstRange=SB`
+
+
+const generateTabelogRamenListURL3 = (pageNumber) => `https://tabelog.com/tokyo/A1305/A130504/R10706/rstLst/ramen/${pageNumber}/?LstRange=SB`
 
 
 const generateGoogleMapURL = (locationStr) => `https://maps.google.co.jp/maps?q=${locationStr}`
@@ -28,18 +34,20 @@ const downloadImageFromURL = async (url, dir, name = '') => rp({ url: url, encod
 
 
 const main = async (event) => {
-    const tabelogUrls = []
+    let tabelogUrls = []
 
-    for (let page = 1; ; page++) {
-        const body = await rp(generateTabelogRamenListURL(page))
-        const dom = new JSDOM(body)
-        const liElements = dom.window.document.querySelectorAll("ul.rstlist-info > li.list-rst")
-
-        if(liElements.length <= 0) 
-            break
-
-        for (const liElement of liElements) {
-            tabelogUrls.push(liElement.getAttribute("data-detail-url"))
+    for(const generateTabelogRamenListURL of [generateTabelogRamenListURL1, generateTabelogRamenListURL2, generateTabelogRamenListURL3]) {
+        for (let page = 1; ; page++) {
+            const body = await rp(generateTabelogRamenListURL(page))
+            const dom = new JSDOM(body)
+            const liElements = dom.window.document.querySelectorAll("ul.rstlist-info > li.list-rst")
+    
+            if(liElements.length <= 0) 
+                break
+    
+            for (const liElement of liElements) {
+                tabelogUrls.push(liElement.getAttribute("data-detail-url"))
+            }
         }
     }
 
@@ -47,6 +55,8 @@ const main = async (event) => {
         console.log(`'tabelogUrls' is empty.`)
         return
     }
+
+    tabelogUrls = Array.from(new Set(tabelogUrls))
 
     const tabelogUrl = tabelogUrls[Math.floor(Math.random() * tabelogUrls.length)]
     const body = await rp(tabelogUrl)
