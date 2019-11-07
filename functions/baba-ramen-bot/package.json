@@ -1,1 +1,9 @@
-{}
+{
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "jsdom": "^15.2.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "twitter": "^1.7.1"
+  }
+}
