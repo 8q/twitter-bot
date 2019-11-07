@@ -102,9 +102,9 @@ ${shopLocationURL}
 }
 
 
-// exports.handler = async (event) => {
-//     await main(event)
-// }
+exports.handler = async (event) => {
+    await main(event)
+}
 
 
-main({}).then()
+// main({}).then()
