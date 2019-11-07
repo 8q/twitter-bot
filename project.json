@@ -3,7 +3,7 @@
   "description": "",
   "memory": 128,
   "timeout": 90,
-  "runtime": "nodejs8.10",
+  "runtime": "nodejs10.x",
   "handler": "index.handler",
   "role": "arn:aws:iam::154769184964:role/twitter-bot_lambda_function",
   "environment": {}
