@@ -91,6 +91,7 @@ ${shopLocationURL}
     console.log(`status id: ${result.id_str}`)
 }
 
+
 exports.handler = async (event) => {
     await main(event)
 }
