@@ -1,7 +1,7 @@
 {
   "name": "twitter-bot",
   "description": "",
-  "memory": 128,
+  "memory": 256,
   "timeout": 90,
   "runtime": "nodejs10.x",
   "handler": "index.handler",
