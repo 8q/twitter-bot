@@ -34,7 +34,7 @@ const downloadImageFromURL = async (url, dir, name = '') => rp({ url: url, encod
 
 
 const main = async (event) => {
-    let tabelogUrls = []
+    const tabelogUrlSet = new Set()
 
     for(const generateTabelogRamenListURL of [generateTabelogRamenListURL1, generateTabelogRamenListURL2, generateTabelogRamenListURL3]) {
         for (let page = 1; ; page++) {
@@ -46,17 +46,17 @@ const main = async (event) => {
                 break
     
             for (const liElement of liElements) {
-                tabelogUrls.push(liElement.getAttribute("data-detail-url"))
+                tabelogUrlSet.add(liElement.getAttribute("data-detail-url"))
             }
         }
     }
+
+    const tabelogUrls = Array.from(tabelogUrlSet)
 
     if (tabelogUrls.length <= 0) {
         console.log(`'tabelogUrls' is empty.`)
         return
     }
-
-    tabelogUrls = Array.from(new Set(tabelogUrls))
 
     const tabelogUrl = tabelogUrls[Math.floor(Math.random() * tabelogUrls.length)]
     const body = await rp(tabelogUrl)
