@@ -3,13 +3,13 @@ const { JSDOM } = require("jsdom")
 const rp = require('request-promise')
 const fs = require('fs')
 const path = require('path')
-const Twitter = require('twitter');
+const Twitter = require('twitter')
 const twitterClient = new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
     access_token_key: process.env.TWITTER_ACCESS_TOKEN,
     access_token_secret: process.env.TWITTER_SECRET_TOKEN,
-});
+})
 
 
 const generateTabelogRamenListURL1 = (pageNumber) => `https://tabelog.com/tokyo/A1305/A130503/R5779/rstLst/ramen/${pageNumber}/?LstRange=SB`
