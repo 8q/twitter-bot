@@ -19,9 +19,9 @@ const getMentionTimeLine = async () => {
 
 
 const main = async (event) => {
-    const lastRun = moment(event.time).add(-10, 'm').unix()
+    const lastRun = moment(event.time).add(-10, 'm').startOf('minute').unix()
     const mentions = (await getMentionTimeLine())
-        .filter(e => moment(e.created_at, "ddd MMM D HH:mm:ss ZZ YYYY").unix() > lastRun)
+        .filter(e => moment(e.created_at, "ddd MMM D HH:mm:ss ZZ YYYY").startOf('minute').unix() > lastRun)
         .filter(e => e.in_reply_to_status_id_str === null || (e.text || '').trim() === `@${process.env.TWITTER_SCREEN_NAME}`)
         .map(e => {
             return {
